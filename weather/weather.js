@@ -32,13 +32,18 @@ function showWeather(data) {
   console.log(data);
   const currentWeather = document.getElementById('current-weather');
 
+  //User Story: I can see a different icon or background image (e.g. snowy mountain, hot desert) depending on the weather.
+  const icon = data.weather[0].icon;
   const description = data.weather[0].description;
+  
   const temp = data.main.temp;
   const hi = data.main.temp_max;
   const lo = data.main.temp_min;
+  
 
   currentWeather.innerHTML = 
-    `${description.toUpperCase()}<br> 
+    `<img src='${icon}' /><br>
+    ${description.toUpperCase()}<br> 
     Current Temp: ${temp}<br>
     Hi: ${hi} , Lo: ${lo}`
 
@@ -46,8 +51,6 @@ function showWeather(data) {
 
 
 
-//fetch(APT_URL + `/api/current?lon=:longitude&lat=:latitude`)  .then(response => response.json())  .then(data => console.log(data));
 
-//User Story: I can see a different icon or background image (e.g. snowy mountain, hot desert) depending on the weather.
 
 //User Story: I can push a button to toggle between Fahrenheit and Celsius.
