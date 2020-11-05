@@ -3,6 +3,8 @@
 
 const API_URL = 'https://weather-proxy.freecodecamp.rocks/';
 const x = document.getElementById('geolocation');
+var celciusDisplay = true;
+var data = {};
 
 //User Story: I can see the weather in my current location.
 function getLocation() {
@@ -28,24 +30,56 @@ function getWeather(position) {
     .catch(err => console.log(err));
 }
 
-function showWeather(data) {
+function swapUnits () {
+  celciusDisplay = !celciusDisplay;
+  showWeather(data);
+}
+
+
+function showWeather(weatherData) {
   console.log(data);
+  data = weatherData;
   const currentWeather = document.getElementById('current-weather');
+  
+  
 
   //User Story: I can see a different icon or background image (e.g. snowy mountain, hot desert) depending on the weather.
   const icon = data.weather[0].icon;
   const description = data.weather[0].description;
   
-  const temp = data.main.temp;
-  const hi = data.main.temp_max;
-  const lo = data.main.temp_min;
+  var temp = data.main.temp;
+  var hi = data.main.temp_max;
+  var lo = data.main.temp_min;
+  var unit = '\u00B0C'
+
+  if (!celciusDisplay) {
+    temp = temp * 9/5 + 32;
+    hi = hi * 9/5 + 32;
+    lo = lo * 9/5 + 32;
+    unit = '\u00B0F'
+  }
+  
   
 
   currentWeather.innerHTML = 
     `<img src='${icon}' /><br>
     ${description.toUpperCase()}<br> 
-    Current Temp: ${temp}<br>
-    Hi: ${hi} , Lo: ${lo}`
+    Current Temp: ${temp.toFixed(1)}${unit}<br>
+    Hi: ${hi.toFixed(1)} , Lo: ${lo.toFixed(1)}<br><br>
+    <button onclick='swapUnits()' id='unit-toggle'></button>`
+
+  //User Story: I can push a button to toggle between Fahrenheit and Celsius.
+  const unitToggle = document.getElementById('unit-toggle');
+
+  
+  if (celciusDisplay) {
+    unitToggle.innerHTML = 'Show in Fahrenheit';
+  }
+  else {
+    unitToggle.innerHTML = 'Show in Celcius';
+  }  
+
+  
 
 }
 
@@ -53,4 +87,5 @@ function showWeather(data) {
 
 
 
-//User Story: I can push a button to toggle between Fahrenheit and Celsius.
+
+
