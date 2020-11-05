@@ -1,1 +1,1 @@
-# Backend Challenges boilerplate - package.json
+# Free Code Camp Exercises
