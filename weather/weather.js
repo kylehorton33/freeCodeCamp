@@ -2,16 +2,18 @@
 
 
 const API_URL = 'https://weather-proxy.freecodecamp.rocks/';
-const x = document.getElementById('geolocation');
+const x = document.getElementById('get-weather');
 var celciusDisplay = true;
 var data = {};
 
 //User Story: I can see the weather in my current location.
 function getLocation() {
   
+  x.innerHTML = 'waiting for geolocation...';
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(getWeather);
+    x.innerHTML = '';
   } else {
     x.innerHTML = "Geolocation is not supported by this browser.";
   }
@@ -22,7 +24,7 @@ function getWeather(position) {
   const latitude = position.coords.latitude;
   const longitude = position.coords.longitude;
 
-  x.innerHTML = `Latitude: ${latitude} <br> Longitude: ${longitude}`
+  //x.innerHTML = `Latitude: ${latitude} <br> Longitude: ${longitude}`
   
   fetch(API_URL + `api/current?lon=${longitude}&lat=${latitude}`)
     .then(res => res.json())
